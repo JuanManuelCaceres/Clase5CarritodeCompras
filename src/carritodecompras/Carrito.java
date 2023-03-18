@@ -4,20 +4,22 @@ import java.util.ArrayList;
 public class Carrito {
     private double precio;
     private itemCarrito item;
-    private int e;
     ArrayList <itemCarrito> carrito;
     
     public Carrito(){
-       ArrayList <itemCarrito> carrito = new ArrayList<>();
+       carrito = new ArrayList<>();
+       this.item = new itemCarrito();
     }
     
     public void agregarItem(itemCarrito item){
-        this.carrito.add(item);
+        this.carrito.add(item);  
     }
     
-    public itemCarrito getItem(){
-        return item;
+    public itemCarrito getItem(int e){
+        return carrito.get(e);
     }
+    
+    
     public double precio(){
         for (int i = 0; i < carrito.size(); i++) {
            precio += carrito.get(i).getProducto().getPrecio()*carrito.get(i).getCantidad();
