@@ -17,7 +17,6 @@ public class Producto {
         this.nombre = "";
         this.descripcion = "";
         this.precio = 0.00;
-        System.out.println("El producto se ha cargado");
     }
     
     public Producto(int codigo, String nombre, String descripcion, double precio){
@@ -25,7 +24,12 @@ public class Producto {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
-        System.out.println("El producto se ha cargado");
+    }
+    public Producto(String[] datos){
+        this.codigo = Integer.parseInt(datos[0]);
+        this.nombre = datos[1];
+        this.descripcion = datos[2];
+        this.precio = Double.parseDouble(datos[3]);
     }
     public int getCodigo(){
         return codigo;

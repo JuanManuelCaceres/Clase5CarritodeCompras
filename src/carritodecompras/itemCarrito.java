@@ -7,13 +7,11 @@ public class itemCarrito{
     public itemCarrito(){
         this.producto = new Producto();
         this.cantidad = 1;
-        System.out.println("El producto ha sido agregado correctamente");
     }
     
     public itemCarrito(Producto producto,int cantidad){
         this.producto = producto;
         this.cantidad = cantidad;
-        System.out.println("El producto ha sido agregado correctamente");
     }
     
     public itemCarrito(int codigo, String nombre, String descripcion, double precio,int cantidad){
