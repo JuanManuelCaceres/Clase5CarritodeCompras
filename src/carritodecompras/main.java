@@ -43,7 +43,7 @@ public class main {
         Carrito carrito = new Carrito();
         carrito.crearCarrito(rutaCompra, rutaProd);
         
-        System.out.println(carrito.precio());
-       
+        carrito.imprimirPrecio(carrito.precio());
+        
     }
 }

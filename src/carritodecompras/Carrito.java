@@ -6,15 +6,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Carrito {
     private double precio;
     private itemCarrito item;
-    ArrayList <itemCarrito> carrito;
+    private ArrayList <itemCarrito> carrito;
+    private String nombre;
     
     public Carrito(){
        carrito = new ArrayList<>();
        this.item = new itemCarrito();
+       this.nombre ="";
     }
     
     public void agregarItem(itemCarrito item){
@@ -26,11 +29,15 @@ public class Carrito {
     }
     
     
+    
     public double precio(){
         for (int i = 0; i < carrito.size(); i++) {
            precio += carrito.get(i).getProducto().getPrecio()*carrito.get(i).getCantidad();
         }
         return precio;
+    }
+    public void setNombre(String nombre){
+        this.nombre = nombre;
     }
     
     public void crearCarrito(String rutaCompra, String rutaProd) throws FileNotFoundException, IOException{
@@ -63,5 +70,34 @@ public class Carrito {
                 }    
             }
         }
+        
+        
+    }
+    public void imprimirPrecio(double total){
+        Scanner in = new Scanner(System.in);
+        System.out.print("Nombre: ");
+        in.nextLine();
+        System.out.print("Documento : ");
+        in.nextInt();
+        
+        System.out.println("\n"+"Codigo\t\t\tDescripcion\t\tPrecio\tCantidad");
+        
+        for (int i = 0; i < carrito.size(); i++) {
+            if ((carrito.get(i).getProducto().getNombre().length()+carrito.get(i).getProducto().getDescripcion().length())<30) {
+                System.out.println(carrito.get(i).getProducto().getCodigo()+
+                            "\t  "+carrito.get(i).getProducto().getNombre()+
+                                   carrito.get(i).getProducto().getDescripcion()+
+                        "\t\t\t "+carrito.get(i).getProducto().getPrecio()+
+                            " \t   "+carrito.get(i).getCantidad());
+            } else{
+                System.out.println(carrito.get(i).getProducto().getCodigo()+
+                             "\t  "+carrito.get(i).getProducto().getNombre()+
+                                    carrito.get(i).getProducto().getDescripcion()+
+                             "\t "+carrito.get(i).getProducto().getPrecio()+
+                             " \t   "+carrito.get(i).getCantidad());
+            }
+        }
+        
+        System.out.println("\t\t\t\t\t Total\t"+total);
     }
 }
