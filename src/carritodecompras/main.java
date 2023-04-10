@@ -43,7 +43,14 @@ public class main {
         Carrito carrito = new Carrito();
         carrito.crearCarrito(rutaCompra, rutaProd);
         
-        carrito.imprimirPrecio(carrito.precio());
+        DescuentoFijo desc = new DescuentoFijo();
+        desc.setDescuento(250);
         
+        carrito.imprimirPrecio();
+        desc.imprimirDescuento(carrito.getPrecio());
+        
+         System.out.println("******************************************************************"+"\n"+
+                            "*                  ¡Gracias por su compra!                       *"+"\n"+
+                            "******************************************************************");
     }
 }

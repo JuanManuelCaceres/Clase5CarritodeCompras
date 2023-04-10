@@ -1,3 +1,4 @@
+//https://github.com/JuanManuelCaceres/Clase5CarritodeCompras
 package carritodecompras;
 
 import java.io.FileNotFoundException;
@@ -34,6 +35,10 @@ public class Carrito {
         for (int i = 0; i < carrito.size(); i++) {
            precio += carrito.get(i).getProducto().getPrecio()*carrito.get(i).getCantidad();
         }
+        return precio;
+    }
+    
+    public double getPrecio(){
         return precio;
     }
     public void setNombre(String nombre){
@@ -73,7 +78,7 @@ public class Carrito {
         
         
     }
-    public void imprimirPrecio(double total){
+    public void imprimirPrecio(){
         Scanner in = new Scanner(System.in);
         System.out.print("Nombre: ");
         in.nextLine();
@@ -98,6 +103,6 @@ public class Carrito {
             }
         }
         
-        System.out.println("\t\t\t\t\t Total\t"+total);
+        System.out.println("\t\t\t\t\t Total\t"+this.precio());
     }
 }
