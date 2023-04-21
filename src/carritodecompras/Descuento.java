@@ -4,7 +4,7 @@ package carritodecompras;
 public abstract class  Descuento {
     private double descuento;
     
-    public Descuento(){ 
+    public Descuento(){
     }
     
     public void setDescuento(double descuento){

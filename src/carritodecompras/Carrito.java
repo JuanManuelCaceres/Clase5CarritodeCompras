@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class Carrito {
     private double precio;
+    private float documento;
     private itemCarrito item;
     private ArrayList <itemCarrito> carrito;
     private String nombre;
@@ -19,19 +20,93 @@ public class Carrito {
        carrito = new ArrayList<>();
        this.item = new itemCarrito();
        this.nombre ="";
+       this.documento=0;
     }
     
     public void agregarItem(itemCarrito item){
         this.carrito.add(item);  
     }
     
+    
+    public void agregarItem() throws IOException{
+        String rutaProd = "C:\\Users\\Juan\\Desktop\\programacion\\CURSO JAVA INICIAL UTN\\Clase 5\\CarritoDeCompras\\src\\carritodecompras\\Productos.txt";
+        Path productos = Paths.get(rutaProd);
+        String[] vecProd;
+        String[] vecCod;
+        int posicion=0;
+        int cantidad=0;
+        Producto prod = new Producto();
+        itemCarrito itemCar;
+        String codigo;
+        Scanner in = new Scanner(System.in);
+        boolean agregar = true;
+        boolean carritoLleno=false;
+        
+        
+        System.out.print("Ingrese codigo: ");
+        codigo = in.next().toLowerCase();
+        if (codigo.equals("fin")) {
+            agregar = false;
+        }
+        if (carritoLleno) {
+            agregar = false;
+            System.out.println("El carrito esta lleno");
+        }
+        
+        while (agregar) {
+
+            //Creamos el vector comando
+            if (codigo.contains("+") || codigo.contains("*")) {
+                vecCod = codigo.split("(?<=\\d)(?=\\D)|(?<=\\D)(?=\\d)");
+            } else {
+                codigo = codigo.concat("+1");
+                vecCod = codigo.split("(?<=\\d)(?=\\D)|(?<=\\D)(?=\\d)");
+            }
+
+            //Determinamos la cantidad en funcion del vecCod[]
+            cantidad = Integer.parseInt(vecCod[2]);
+
+            //Creamos el itemCarrito
+            for (String lineas : Files.readAllLines(productos)) {
+                vecProd = lineas.split(";");
+                if (vecProd[0].equals(vecCod[0])) {
+                    prod = new Producto(vecProd);
+                } else {
+                    
+                }
+            }
+            
+            itemCar = new itemCarrito(prod, cantidad);
+            
+            if (this.carrito.size() < 10) {
+                if (this.contieneItem(String.valueOf(itemCar.getCodigo()))) {
+                    cantidad += this.carrito.get(this.posicionItem(vecCod[0])).getCantidad();
+                    this.carrito.get(this.posicionItem(vecCod[0])).setCantidad(cantidad);
+                } else {
+                    this.carrito.add(itemCar);
+                }
+            } else {
+                System.out.println("El carrito esta lleno");
+                carritoLleno = true;
+                agregar = false;
+            }
+            System.out.print("Ingrese codigo: ");
+            codigo = in.next();
+            
+            if (codigo.equals("fin")) {
+                agregar = false;
+            }
+        }
+        
+  
+    }
+    
     public itemCarrito getItem(int e){
         return carrito.get(e);
     }
     
-    
-    
     public double precio(){
+        precio=0;
         for (int i = 0; i < carrito.size(); i++) {
            precio += carrito.get(i).getProducto().getPrecio()*carrito.get(i).getCantidad();
         }
@@ -43,6 +118,9 @@ public class Carrito {
     }
     public void setNombre(String nombre){
         this.nombre = nombre;
+    }
+    public void setDocumento(float documento){
+        this.documento = documento;
     }
     
     public void crearCarrito(String rutaCompra, String rutaProd) throws FileNotFoundException, IOException{
@@ -66,7 +144,7 @@ public class Carrito {
         
         //Filtro de productos
         for(String lineas:Files.readAllLines(productos)){
-            vec = lineas.split("\t");
+            vec = lineas.split(";");
             prod = new Producto(vec);
             for (int i = 0; i < orden.tamaño(); i++) {
                 if (prod.getCodigo()==orden.getItemOrden(i).getCodigo()) {
@@ -78,23 +156,25 @@ public class Carrito {
         
         
     }
-    public void imprimirPrecio(){
-        Scanner in = new Scanner(System.in);
-        System.out.print("Nombre: ");
-        in.nextLine();
-        System.out.print("Documento : ");
-        in.nextInt();
-        
+    
+    public void mostrarCarrito(){
         System.out.println("\n"+"Codigo\t\t\tDescripcion\t\tPrecio\tCantidad");
         
         for (int i = 0; i < carrito.size(); i++) {
-            if ((carrito.get(i).getProducto().getNombre().length()+carrito.get(i).getProducto().getDescripcion().length())<30) {
+            if ((carrito.get(i).getProducto().getNombre().length()+carrito.get(i).getProducto().getDescripcion().length())<22) {
                 System.out.println(carrito.get(i).getProducto().getCodigo()+
                             "\t  "+carrito.get(i).getProducto().getNombre()+
                                    carrito.get(i).getProducto().getDescripcion()+
                         "\t\t\t "+carrito.get(i).getProducto().getPrecio()+
                             " \t   "+carrito.get(i).getCantidad());
-            } else{
+            } else if((carrito.get(i).getProducto().getNombre().length()+carrito.get(i).getProducto().getDescripcion().length())<26){
+                System.out.println(carrito.get(i).getProducto().getCodigo()+
+                            "\t  "+carrito.get(i).getProducto().getNombre()+
+                                   carrito.get(i).getProducto().getDescripcion()+
+                         "\t\t "+carrito.get(i).getProducto().getPrecio()+
+                            " \t   "+carrito.get(i).getCantidad());
+                
+            }else{
                 System.out.println(carrito.get(i).getProducto().getCodigo()+
                              "\t  "+carrito.get(i).getProducto().getNombre()+
                                     carrito.get(i).getProducto().getDescripcion()+
@@ -104,5 +184,69 @@ public class Carrito {
         }
         
         System.out.println("\t\t\t\t\t Total\t"+this.precio());
+    }
+    public void imprimirPrecio(){
+        Scanner in = new Scanner(System.in);
+        System.out.print("\nNombre: ");
+        in.nextLine();
+        System.out.print("Documento : ");
+        in.nextInt();
+        
+        System.out.println("\n"+"Codigo\t\t\tDescripcion\t\tPrecio\tCantidad");
+        
+        for (int i = 0; i < carrito.size(); i++) {
+            if ((carrito.get(i).getProducto().getNombre().length()+carrito.get(i).getProducto().getDescripcion().length())<22) {
+                System.out.println(carrito.get(i).getProducto().getCodigo()+
+                            "\t  "+carrito.get(i).getProducto().getNombre()+
+                                   carrito.get(i).getProducto().getDescripcion()+
+                        "\t\t\t "+carrito.get(i).getProducto().getPrecio()+
+                            " \t   "+carrito.get(i).getCantidad());
+            } else if((carrito.get(i).getProducto().getNombre().length()+carrito.get(i).getProducto().getDescripcion().length())<26){
+                System.out.println(carrito.get(i).getProducto().getCodigo()+
+                            "\t  "+carrito.get(i).getProducto().getNombre()+
+                                   carrito.get(i).getProducto().getDescripcion()+
+                         "\t\t "+carrito.get(i).getProducto().getPrecio()+
+                            " \t   "+carrito.get(i).getCantidad());
+                
+            }else{
+                System.out.println(carrito.get(i).getProducto().getCodigo()+
+                             "\t  "+carrito.get(i).getProducto().getNombre()+
+                                    carrito.get(i).getProducto().getDescripcion()+
+                             "\t "+carrito.get(i).getProducto().getPrecio()+
+                             " \t   "+carrito.get(i).getCantidad());
+            }
+        }
+        
+        System.out.println("\t\t\t\t\t Total\t"+this.precio());
+    }
+    public void nuevoCarrito(){
+        this.carrito.clear();
+    }
+    
+    public boolean contieneItem(String codigo){
+        for(itemCarrito item : this.carrito){
+            if(item.getCodigo()== Integer.parseInt(codigo)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void limpiarCarrito(){
+        for (itemCarrito item : this.carrito) {
+            if(item.getCantidad()<=0){
+                this.carrito.remove(item);
+            }
+        }
+    }
+    public int posicionItem(String codigo){
+        
+        for (int i = 0; i < this.carrito.size(); i++) {
+            if (this.carrito.get(i).getCodigo()==Integer.parseInt(codigo)) {
+                return i;
+            }
+        }
+        
+        return -1;
     }
 }

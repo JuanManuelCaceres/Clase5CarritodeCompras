@@ -1,4 +1,21 @@
-101	Yerba Playadito	500 gr	250
-102	Paq. Galletitas Diversion	500 gr	390
-103	Galletitas Sandwich	Pack x3 100gr	280
-104	Dulce de leche	500 gr	490
+101;Yerba Playadito;500 gr;470
+102;Yerba CBSÉ;500 gr;520
+103;Yerba Unión;500 gr;520
+104;Yerba Aguantadora;500 gr;500		
+105;Galletitas Serranas;100 gr;250
+106;Galletitas Serranas;Pack x3 100 gr;650 
+107;Galletitas Sandwich;Pack x3 100 gr;280
+108;Galletitas Serranitas;Pack x3 85 gr;580
+109;Galletitas Hogareñas;Pack x3 100 gr;700
+110;Paq. Galletitas Fantoche;85 gr;380
+110;Paq. Galletitas Surtido Bagley;500 gr;580
+112;Paq. Galletitas Diversion;500 gr;600
+113;Paq. Galletitas Pepa;500 gr;500
+114;Paq. Galletitas Pepa;120 gr;380
+115;Dulce de leche Serenisima;500 gr;490
+116;Dulce de leche Sancor;500 gr;500
+117;Dulce de leche Milkaut;500 gr;500
+118;Leche Serenisima 3%;Salchet 1L;290
+119;Leche Serenisima 1%;Salchet 1L;290
+120;Yogurt Serenisima;Salchet 1L;350
+121;Yogurt Serenisima;Bebible;210	

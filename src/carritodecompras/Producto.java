@@ -1,6 +1,9 @@
 package carritodecompras;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Producto {
     private String nombre, descripcion;
@@ -55,5 +58,12 @@ public class Producto {
     }
     public void setPrecio(int e){
         this.precio = e;
+    }
+    
+    public void verLista(String rutaProd) throws IOException{
+        Path productos = Paths.get(rutaProd);
+        for(String lineas:Files.readAllLines(productos)){
+            System.out.println(lineas);
+        }
     }
 }

@@ -1,56 +1,93 @@
+//https://github.com/JuanManuelCaceres/Clase5CarritodeCompras
 package carritodecompras;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class main {
     public static void main(String[] args) throws IOException {
         
-        /*Producto yerba = new Producto(101,"Yerba Playadito","500 gr",210);
-            Producto galletita = new Producto(102,"9 de Oro","100 gr",380);
-            Producto dulceDeLeche = new Producto(103,"Doña Pepa","500 gr",450);
-            
-            itemCarrito item1 = new itemCarrito(yerba,1);
-            itemCarrito item2 = new itemCarrito(galletita,2);
-            itemCarrito item3 = new itemCarrito(dulceDeLeche,3);
-            
-            Carrito listaCompra = new Carrito();
-            
-            listaCompra.agregarItem(item1);
-            listaCompra.agregarItem(item2);
-            listaCompra.agregarItem(item3);
-            
-            
-            
-            System.out.println("Codigo: "+listaCompra.getItem(0).getProducto().getCodigo());
-            
-            System.out.println("Producto: "+item1.getProducto().getNombre());
-            //System.out.println("El tamañano del carrito es: "+listaCompra.size());
-            System.out.println("El precio de la compra es: "+listaCompra.precio());
-            */
-        //for(String linea : Productos){
-            
-        //}
-        //Path rutaProd = new Path(getPat("C:\\Users\\Juan\\Desktop\\programacion\\CURSO JAVA INICIAL UTN\\Clase 5\\CarritoDeCompras\\src\\carritodecompras\\Productos.txt"));
-        //File productos = new File("C:\\Users\\Juan\\Desktop\\programacion\\CURSO JAVA INICIAL UTN\\Clase 5\\CarritoDeCompras\\src\\carritodecompras\\Productos.txt");
-        
-        
-        /*String stringProd = "C:\\Users\\Juan\\Desktop\\programacion\\CURSO JAVA INICIAL UTN\\Clase 5\\CarritoDeCompras\\src\\carritodecompras\\Productos.txt";
-        File rutaProd = new File(stringProd);*/
-        
+        boolean continuar = true;
+        String comando;
+        String codigo;
+        Scanner in = new Scanner(System.in);
         String rutaProd = "C:\\Users\\Juan\\Desktop\\programacion\\CURSO JAVA INICIAL UTN\\Clase 5\\CarritoDeCompras\\src\\carritodecompras\\Productos.txt";
         String rutaCompra = "C:\\Users\\Juan\\Desktop\\programacion\\CURSO JAVA INICIAL UTN\\Clase 5\\CarritoDeCompras\\src\\carritodecompras\\Compra.txt";
-        
-        Carrito carrito = new Carrito();
-        carrito.crearCarrito(rutaCompra, rutaProd);
-        
+        Carrito carrito= new Carrito();
+        Producto prod = new Producto();
         DescuentoFijo desc = new DescuentoFijo();
-        desc.setDescuento(250);
+        desc.setDescuento(800);
         
-        carrito.imprimirPrecio();
-        desc.imprimirDescuento(carrito.getPrecio());
         
-         System.out.println("******************************************************************"+"\n"+
-                            "*                  ¡Gracias por su compra!                       *"+"\n"+
-                            "******************************************************************");
-    }
+        System.out.println("\n"+
+                           "******************************************************************"+"\n"+
+                           "*                         ¡Bienvenido!                           *"+"\n"+
+                           "******************************************************************"+"\n");
+        
+        while(continuar){
+            System.out.println("Ingrese un comando (Ej:AYUDA): ");
+            comando = in.nextLine();
+            
+            
+            switch(comando.toLowerCase()){
+                case "ayuda":
+                    System.out.println("\t-Nuevo Carrito(NC)\t\t-Cargar Carrito desde Archivo(CA)\t-Agregar Items mediante codigo(CC)\n"+
+                                       "\t-Ver Lista de Productos(LP)\t-Mostrar Carrito(MC)\t\t\t-Imprimir Ticket(IT)\n"+
+                                       "\t-Finalizar(fin)\n");
+                    break;
+                    
+                case "nc":
+                    carrito.nuevoCarrito();
+                    System.out.println("\n"+"Nuevo carro de compra inicializado...\n"+"Ya puede comenzar a agregar Items.\n");
+                    break;
+                    
+                case "ca":
+                    carrito.crearCarrito(rutaCompra,rutaProd);
+                    System.out.println("\nProcesando informacion...\n"+"Su compra se ha cargado.\n");
+                    break;
+                    
+                case "cc":
+                    carrito.agregarItem();
+                    break;
+                case "lp":
+                    prod.verLista(rutaProd);
+                    break;
+                    
+                case "mc":
+                    carrito.mostrarCarrito();
+                    
+                    break;
+                    
+                case "it":
+                    if (carrito.precio()>0) {
+                        if (desc.aplicarDescuento(carrito.precio())<0) {
+                            System.out.println("El total del carrito no puede ser negativo. Verifique el descuento aplicado");
+                            break;
+                        } else {
+                            carrito.imprimirPrecio();
+                            desc.imprimirDescuento(carrito.getPrecio());
+                            System.out.println("\n"
+                                    + "******************************************************************" + "\n"
+                                    + "*                  ¡Gracias por su compra!                       *" + "\n"
+                                    + "******************************************************************");
+                            System.out.println("\n\n\n");
+                            break;
+                        }
+ 
+                    } else{
+                        System.out.println("No se puede aplicar descuento a un carrito de precio \"0\" o un carrito vacío.\nIntente nuevamente.");
+                        break;
+                    }
+                    
+                    
+                case "fin":
+                    continuar = false;
+                    break;
+                    
+                default:
+                    System.out.println("!Atención¡ El comando ingresado no es válido. Intente Nuevamente.");
+                    break;
+            }
+        }
+   }
 }
