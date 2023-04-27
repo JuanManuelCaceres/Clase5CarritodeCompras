@@ -15,7 +15,7 @@ public class Producto {
         
     }
     
-        public Producto(){
+    public Producto(){
         this.codigo = 0;
         this.nombre = "";
         this.descripcion = "";

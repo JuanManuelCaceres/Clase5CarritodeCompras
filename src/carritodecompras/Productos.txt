@@ -18,4 +18,4 @@
 118;Leche Serenisima 3%;Salchet 1L;290
 119;Leche Serenisima 1%;Salchet 1L;290
 120;Yogurt Serenisima;Salchet 1L;350
-121;Yogurt Serenisima;Bebible;210	
+121;Yogurt Serenisima;Bebible;210
