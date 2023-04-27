@@ -15,9 +15,9 @@ public class conexionMySQL {
     }
 
     public Connection conectar() throws ClassNotFoundException{
-        Class.forName(driver);
         
-        System.out.println("Conectando con base de datos...");
+        
+        
         try{
             Class.forName(driver);
             con = DriverManager.getConnection(url+db,user,password);

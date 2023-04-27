@@ -36,11 +36,13 @@ public class main {
         // Objeto para crear la conexion con la base de datos
         conexionMySQL con = new conexionMySQL();
         try {
+            System.out.println("Intentando conectar con base de datos...");
             con.conectar();
+            System.out.println("Conexión Exitosa.");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("No se ha podido conectar con la base de datos.\n"+"El programa finalizará inmediatamente...");
-            System.exit(1);
+            System.exit(0);
         }
         
         System.out.println("\n"+
@@ -96,7 +98,7 @@ public class main {
                     break;
                 case "lp":
                     System.out.println("Codigo\tNombre y Descripcion\t\t\tPrecio");
-                    ResultSet rs = con.ejecutarConsulta("Select * from supermercado.producto where codigoP = 101");
+                    ResultSet rs = con.ejecutarConsulta("Select * from supermercado.producto");
                     while(rs.next()){
                         int codigoP = rs.getInt("codigoP");
                         String nombre = rs.getString("nombreP");
@@ -123,17 +125,15 @@ public class main {
                             System.out.println("El total del carrito no puede ser negativo. Verifique el descuento aplicado");
                             break;
                         } else {
-                            System.out.print("\nNombre: ");
-                            String nombreCl = in.nextLine();
-                            
-                            System.out.print("Documento : ");
-                            String documentoCl = in.nextLine();
+                                                        
+                            System.out.print("CUIL/CUIT: ");
+                            String cuilCl = in.nextLine();
                             
                             carrito.imprimirPrecio();
                             desc.imprimirDescuento(carrito.getPrecio());
                             
                             double descuento = desc.getDesceunto();
-                            carrito.subirDB(descuento,nombreCl,documentoCl);
+                            carrito.subirDB(descuento,cuilCl);
                            
                             System.out.println("\n"
                                     + "******************************************************************" + "\n"

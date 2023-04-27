@@ -292,14 +292,14 @@ public class Carrito {
         System.out.println("\t\t\t\t\t Total\t"+this.precio());
     }
     
-    public void subirDB(Double descuento,String nombreCl,String documentoCl) throws SQLException{
+    public void subirDB(Double descuento,String cuilCl) throws SQLException{
         String precioCo = String.valueOf(this.precio());
         String descuentoCo = String.valueOf(descuento);
         LocalDate fecha = null;
         
 
-        String consulta = "insert into supermercado.compra(idCo,documentoCl,nombreCl,precioCo,descuentoCo,fecha) "
-            + "values (idCo,"+documentoCl+",'"+nombreCl+"',"+precioCo+","+descuentoCo+","+fecha+")";
+        String consulta = "insert into supermercado.compra(idCo,cuilCl,precioCo,descuentoCo,fecha) "
+            + "values (idCo,"+cuilCl+","+precioCo+","+descuentoCo+","+fecha+")";
         
         
         //Conectamos el metodo a la base de datos
